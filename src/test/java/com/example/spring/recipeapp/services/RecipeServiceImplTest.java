@@ -3,6 +3,7 @@ package com.example.spring.recipeapp.services;
 import com.example.spring.recipeapp.commands.RecipeCommand;
 import com.example.spring.recipeapp.converters.RecipeToRecipeCommand;
 import com.example.spring.recipeapp.domain.Recipe;
+import com.example.spring.recipeapp.exceptions.NotFoundException;
 import com.example.spring.recipeapp.repositories.RecipeRepository;
 import org.junit.Before;
 import org.junit.Test;
@@ -29,7 +30,7 @@ public class RecipeServiceImplTest {
     private RecipeRepository recipeRepository;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         MockitoAnnotations.initMocks(this);
 
     }
@@ -46,8 +47,20 @@ public class RecipeServiceImplTest {
         verify(recipeRepository, never()).findAll();
     }
 
+    @Test(expected = NotFoundException.class)
+    public void getRecipeByIdTestNotFound() {
+        Optional<Recipe> recipeOptional = Optional.empty();
+        when(recipeRepository.findById(anyLong())).thenReturn(recipeOptional);
+        recipeService.findById(1L);
+    }
+
+    @Test(expected = NumberFormatException.class)
+    public void getRecipeById_throws_NumberFormatException_when_id_is_not_a_number() {
+        recipeService.findById(Long.valueOf("asd"));
+    }
+
     @Test
-    public void getRecipeCommandByIdTest() throws Exception {
+    public void getRecipeCommandByIdTest() {
         Recipe recipe = new Recipe();
         recipe.setId(1L);
         Optional<Recipe> recipeOptional = Optional.of(recipe);
@@ -81,7 +94,7 @@ public class RecipeServiceImplTest {
     }
 
     @Test
-    public void testDeleteById() throws Exception {
+    public void testDeleteById() {
 
         //given
         Long idToDelete = Long.valueOf(2L);
@@ -94,6 +107,4 @@ public class RecipeServiceImplTest {
         //then
         verify(recipeRepository, times(1)).deleteById(anyLong());
     }
-
-
 }

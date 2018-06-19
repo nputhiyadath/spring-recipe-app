@@ -2,6 +2,7 @@ package com.example.spring.recipeapp.controllers;
 
 import com.example.spring.recipeapp.commands.RecipeCommand;
 import com.example.spring.recipeapp.domain.Recipe;
+import com.example.spring.recipeapp.exceptions.NotFoundException;
 import com.example.spring.recipeapp.services.RecipeService;
 import org.junit.Before;
 import org.junit.Test;
@@ -47,6 +48,26 @@ public class RecipeControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(view().name("recipe/show"))
                 .andExpect(model().attributeExists("recipe"));
+    }
+
+    @Test
+    public void testGetRecipeNotFound() throws Exception {
+        when(recipeService.findById(anyLong())).thenThrow(NotFoundException.class);
+        mockMvc.perform(get("/recipe/1/show"))
+                .andExpect(status().isNotFound())
+                .andExpect(view().name("404error"))
+                .andExpect(model().attributeExists("errorCodeAndMessage"))
+                .andExpect(model().attribute("errorCodeAndMessage","404 Not Found"));
+    }
+
+    @Test
+    public void testGetRecipeNumberFormatException() throws Exception {
+        when(recipeService.findById(anyLong())).thenThrow(NumberFormatException.class);
+        mockMvc.perform(get("/recipe/abc/show"))
+                .andExpect(status().isBadRequest())
+                .andExpect(view().name("404error"))
+                .andExpect(model().attributeExists("errorCodeAndMessage"))
+                .andExpect(model().attribute("errorCodeAndMessage","400 Bad Request"));
     }
 
     @Test

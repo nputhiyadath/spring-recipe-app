@@ -1,6 +1,7 @@
 package com.example.spring.recipeapp.services;
 
 import com.example.spring.recipeapp.commands.IngredientCommand;
+import com.example.spring.recipeapp.converters.IngredientCommandToIngredient;
 import com.example.spring.recipeapp.converters.IngredientToIngredientCommand;
 import com.example.spring.recipeapp.converters.UnitOfMeasureToUnitOfMeasureCommand;
 import com.example.spring.recipeapp.domain.Ingredient;
@@ -22,6 +23,9 @@ public class IngredientServiceImplITest {
 
     @Mock
     private IngredientToIngredientCommand ingredientToIngredientCommand;
+
+    @Mock
+    private IngredientCommandToIngredient ingredientCommandToIngredient;
 
     @Mock
     private RecipeRepository recipeRepository;
@@ -81,7 +85,7 @@ public class IngredientServiceImplITest {
         verify(recipeRepository, times(1)).findById(anyLong());
     }
 
-    //@Test (TODO: FIX)
+    @Test
     public void testSaveRecipeCommand() throws Exception {
         //given
         IngredientCommand command = new IngredientCommand();
@@ -96,6 +100,9 @@ public class IngredientServiceImplITest {
 
         when(recipeRepository.findById(anyLong())).thenReturn(recipeOptional);
         when(recipeRepository.save(any())).thenReturn(savedRecipe);
+
+        when(ingredientCommandToIngredient.convert(any(IngredientCommand.class))).thenReturn(new Ingredient());
+        when(ingredientToIngredientCommand.convert(any(Ingredient.class))).thenReturn(command);
 
         //when
         IngredientCommand savedCommand = ingredientService.saveIngredientCommand(command);

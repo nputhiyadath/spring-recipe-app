@@ -4,6 +4,7 @@ import com.example.spring.recipeapp.commands.RecipeCommand;
 import com.example.spring.recipeapp.converters.RecipeCommandToRecipe;
 import com.example.spring.recipeapp.converters.RecipeToRecipeCommand;
 import com.example.spring.recipeapp.domain.Recipe;
+import com.example.spring.recipeapp.exceptions.NotFoundException;
 import com.example.spring.recipeapp.repositories.RecipeRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +40,7 @@ public class RecipeServiceImpl implements RecipeService {
     public Recipe findById(Long recipeID) {
         Optional<Recipe> recipeOptional = recipeRepository.findById(recipeID);
         if (!recipeOptional.isPresent()) {
-            throw new RuntimeException("Recipe not found");
+            throw new NotFoundException("Recipe not found. For ID value: " + recipeID.toString());
         }
         return recipeOptional.get();
     }
