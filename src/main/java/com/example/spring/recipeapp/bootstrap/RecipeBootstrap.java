@@ -6,6 +6,7 @@ import com.example.spring.recipeapp.repositories.RecipeRepository;
 import com.example.spring.recipeapp.repositories.UnitOfMeasureRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
+import org.springframework.context.annotation.Profile;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 
@@ -15,6 +16,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Component
+@Profile("default")
 public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEvent> {
 
     public static final String EXPECTED_UOM_NOT_FOUND = "Expected UOM Not Found";
