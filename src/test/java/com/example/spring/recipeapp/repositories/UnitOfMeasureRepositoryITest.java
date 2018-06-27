@@ -15,6 +15,7 @@ import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringRunner.class)
 @DataMongoTest
+@Ignore
 public class UnitOfMeasureRepositoryITest {
 
     @Autowired
