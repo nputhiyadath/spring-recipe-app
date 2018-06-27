@@ -39,7 +39,7 @@ public class IndexControllerTest {
     @Test
     public void getIndexPage() {
         Recipe recipe = new Recipe();
-        recipe.setId(1L);
+        recipe.setId("1");
         Set<Recipe> recipes = new HashSet<>();
         recipes.add(recipe);
         when(recipeService.getRecipes()).thenReturn(recipes);

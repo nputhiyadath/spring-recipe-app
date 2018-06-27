@@ -5,18 +5,23 @@ import com.example.spring.recipeapp.converters.RecipeCommandToRecipe;
 import com.example.spring.recipeapp.converters.RecipeToRecipeCommand;
 import com.example.spring.recipeapp.domain.Recipe;
 import com.example.spring.recipeapp.repositories.RecipeRepository;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.data.ldap.DataLdapTest;
+import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import javax.transaction.Transactional;
-
 import static org.junit.Assert.assertEquals;
+
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
+@DataMongoTest
+@Ignore
 public class RecipeServiceITest {
     private static final String NEW_DESCRIPTION = "New Description";
 
@@ -27,12 +32,8 @@ public class RecipeServiceITest {
     private RecipeRepository recipeRepository;
 
     @Autowired
-    private RecipeCommandToRecipe recipeCommandToRecipe;
-
-    @Autowired
     private RecipeToRecipeCommand recipeToRecipeCommand;
 
-    @Transactional
     @Test
     public void testSaveOfDescription() throws Exception {
         //given
