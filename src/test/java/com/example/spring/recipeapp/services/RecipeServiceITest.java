@@ -1,16 +1,13 @@
 package com.example.spring.recipeapp.services;
 
 import com.example.spring.recipeapp.commands.RecipeCommand;
-import com.example.spring.recipeapp.converters.RecipeCommandToRecipe;
 import com.example.spring.recipeapp.converters.RecipeToRecipeCommand;
 import com.example.spring.recipeapp.domain.Recipe;
 import com.example.spring.recipeapp.repositories.RecipeRepository;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.data.ldap.DataLdapTest;
 import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
