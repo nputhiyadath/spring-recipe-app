@@ -22,6 +22,15 @@ public class UnitOfMeasureRepositoryITest {
 
     @Before
     public void setUp() throws Exception {
+
+        unitOfMeasureRepository.deleteAll();
+        UnitOfMeasure teaspoon = new UnitOfMeasure();
+        teaspoon.setDescription("Teaspoon");
+        unitOfMeasureRepository.save(teaspoon);
+
+        UnitOfMeasure cup = new UnitOfMeasure();
+        cup.setDescription("Cup");
+        unitOfMeasureRepository.save(cup);
     }
 
     @Test

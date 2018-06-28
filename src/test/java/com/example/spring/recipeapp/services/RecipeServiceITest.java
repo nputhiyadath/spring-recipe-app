@@ -23,7 +23,7 @@ public class RecipeServiceITest {
     private static final String NEW_DESCRIPTION = "New Description";
 
     @Autowired
-    private RecipeService recipeService;
+    private RecipeServiceImpl recipeService;
 
     @Autowired
     private RecipeRepository recipeRepository;
