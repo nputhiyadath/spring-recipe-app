@@ -2,7 +2,6 @@ package com.example.spring.recipeapp.repositories;
 
 import com.example.spring.recipeapp.domain.UnitOfMeasure;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +21,15 @@ public class UnitOfMeasureRepositoryITest {
 
     @Before
     public void setUp() throws Exception {
+
+        unitOfMeasureRepository.deleteAll();
+        UnitOfMeasure teaspoon = new UnitOfMeasure();
+        teaspoon.setDescription("Teaspoon");
+        unitOfMeasureRepository.save(teaspoon);
+
+        UnitOfMeasure cup = new UnitOfMeasure();
+        cup.setDescription("Cup");
+        unitOfMeasureRepository.save(cup);
     }
 
     @Test
