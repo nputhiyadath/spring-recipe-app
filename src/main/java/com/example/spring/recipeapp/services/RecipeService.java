@@ -2,18 +2,18 @@ package com.example.spring.recipeapp.services;
 
 import com.example.spring.recipeapp.commands.RecipeCommand;
 import com.example.spring.recipeapp.domain.Recipe;
-
-import java.util.Set;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 public interface RecipeService {
 
-    Set<Recipe> getRecipes();
+    Flux<Recipe> getRecipes();
 
-    Recipe findById(String recipeID);
+    Mono<Recipe> findById(String recipeID);
 
-    RecipeCommand saveRecipeCommand(RecipeCommand recipeCommand);
+    Mono<RecipeCommand> saveRecipeCommand(RecipeCommand recipeCommand);
 
-    RecipeCommand findCommandById(String recipeID);
+    Mono<RecipeCommand> findCommandById(String recipeID);
 
-    void deleteById(String idToDelete);
+    Mono<Void> deleteById(String idToDelete);
 }

@@ -3,12 +3,10 @@ package com.example.spring.recipeapp.services;
 import com.example.spring.recipeapp.commands.RecipeCommand;
 import com.example.spring.recipeapp.converters.RecipeToRecipeCommand;
 import com.example.spring.recipeapp.domain.Recipe;
-import com.example.spring.recipeapp.repositories.RecipeRepository;
-import org.junit.Ignore;
+import com.example.spring.recipeapp.repositories.reactive.RecipeReactiveRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -17,8 +15,6 @@ import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-@DataMongoTest
-@Ignore
 public class RecipeServiceITest {
     private static final String NEW_DESCRIPTION = "New Description";
 
@@ -26,7 +22,7 @@ public class RecipeServiceITest {
     private RecipeServiceImpl recipeService;
 
     @Autowired
-    private RecipeRepository recipeRepository;
+    private RecipeReactiveRepository recipeReactiveRepository;
 
     @Autowired
     private RecipeToRecipeCommand recipeToRecipeCommand;
@@ -34,13 +30,13 @@ public class RecipeServiceITest {
     @Test
     public void testSaveOfDescription() throws Exception {
         //given
-        Iterable<Recipe> recipes = recipeRepository.findAll();
+        Iterable<Recipe> recipes = recipeReactiveRepository.findAll().toIterable();
         Recipe testRecipe = recipes.iterator().next();
         RecipeCommand testRecipeCommand = recipeToRecipeCommand.convert(testRecipe);
 
         //when
         testRecipeCommand.setDescription(NEW_DESCRIPTION);
-        RecipeCommand savedRecipeCommand = recipeService.saveRecipeCommand(testRecipeCommand);
+        RecipeCommand savedRecipeCommand = recipeService.saveRecipeCommand(testRecipeCommand).block();
 
         //then
         assertEquals(NEW_DESCRIPTION, savedRecipeCommand.getDescription());

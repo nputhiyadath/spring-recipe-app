@@ -17,8 +17,5 @@ public class Category {
     @Id
     private String id;
     private String description;
-
-    @DBRef
     private Set<Recipe> recipes = new HashSet<>();
-
 }
