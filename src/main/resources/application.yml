@@ -1,0 +1,14 @@
+server:
+  port: 9000
+security:
+  oauth2:
+    client:
+      client-id: 903860596466784
+      client-secret: d881145942fc05cdea26135981bed5d0
+      access-token-uri: https://graph.facebook.com/oauth/access_token
+      user-authorization-uri: https://www.facebook.com/dialog/oauth
+      token-name: oauth_token
+      authentication-scheme: query
+      client-authentication-scheme: form
+    resource:
+      user-info-uri: https://graph.facebook.com/me
